@@ -3,108 +3,415 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f5f7">
 <title>My Digital Life</title>
 <style>
-* { box-sizing: border-box; }
+:root {
+  --bg:#f5f5f7;
+  --card:#fff;
+  --text:#1d1d1f;
+  --muted:#86868b;
+  --line:#e8e8ed;
+  --blue:#0071e3;
+  --soft:#eef5ff;
+}
+* {box-sizing:border-box}
 body {
-  margin: 0;
-  background: #f5f5f7;
-  color: #1d1d1f;
-  font-family: -apple-system, BlinkMacSystemFont,
-    "SF Pro Display", "PingFang SC", sans-serif;
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,
+  "SF Pro Display","PingFang SC",sans-serif;
 }
-header {
-  padding: 65px 24px 45px;
-  text-align: center;
+button,input,textarea {font:inherit}
+button {cursor:pointer}
+.layout {
+  max-width:1180px;margin:auto;padding:28px 22px;
 }
-header p { color: #86868b; }
-h1 { font-size: 42px; letter-spacing: -2px; }
-main { max-width: 950px; margin: auto; padding: 20px; }
+.topbar {
+  display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:35px;
+}
+.brand {font-size:18px;font-weight:700;letter-spacing:-.5px}
+.brand span {color:var(--blue)}
+.status {font-size:12px;color:var(--muted)}
+.hero {padding:45px 10px 35px}
+.eyebrow {
+  font-size:12px;letter-spacing:2px;
+  color:var(--muted);font-weight:600;
+}
+h1 {font-size:clamp(38px,7vw,62px);letter-spacing:-3px;margin:12px 0}
+.hero p {color:var(--muted);font-size:15px}
+.toolbar {display:flex;gap:12px;margin:20px 0 28px}
 .search {
-  width: 100%; padding: 16px 20px;
-  border: 1px solid #e5e5e7; border-radius: 16px;
-  font-size: 16px; margin-bottom: 25px;
+  flex:1;min-width:0;padding:14px 17px;
+  border:1px solid var(--line);border-radius:14px;
+  background:white;outline:none;
 }
+.search:focus,.field:focus {border-color:var(--blue)}
+.btn {
+  border:0;border-radius:12px;padding:12px 18px;
+  background:var(--blue);color:white;font-weight:600;
+}
+.btn.secondary {background:#e9e9ed;color:var(--text)}
+.btn.danger {background:#fff0f0;color:#c33}
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-  gap: 18px;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:17px;
 }
 .card {
-  display: block; text-decoration: none; color: inherit;
-  background: white; border-radius: 22px;
-  padding: 28px; min-height: 155px;
-  transition: .2s;
+  background:var(--card);border:1px solid #eee;
+  border-radius:22px;padding:25px;
+  min-height:175px;text-align:left;
+  transition:transform .2s,box-shadow .2s;
 }
-.card:hover { transform: translateY(-4px); }
-.card span { font-size: 30px; }
-.card h2 { font-size: 19px; }
-.card p { color: #86868b; font-size: 14px; }
+.card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 10px 30px #0000000a;
+}
+.card .emoji {font-size:29px}
+.card h3 {margin:17px 0 7px;font-size:19px}
+.card p {margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+.section {
+  display:none;background:white;border-radius:24px;
+  padding:30px;margin-top:20px;
+}
+.section.active {display:block}
+.section-head {
+  display:flex;justify-content:space-between;
+  align-items:center;gap:12px;flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.section h2 {font-size:27px;margin:0}
+.back {
+  border:0;background:#f1f1f3;border-radius:10px;
+  padding:9px 14px;color:#333;
+}
+.info {
+  background:#f7f8fa;padding:20px;
+  border-radius:16px;margin:12px 0;
+  line-height:1.8;
+}
+.info small {color:var(--muted)}
+.private-label {
+  display:inline-block;background:#fff3dc;
+  color:#986000;border-radius:20px;
+  padding:5px 10px;font-size:11px;
+}
+.record {
+  border:1px solid var(--line);border-radius:15px;
+  padding:16px;margin:12px 0;
+}
+.record p {white-space:pre-wrap;line-height:1.7}
+.record small {color:var(--muted)}
+.field {
+  width:100%;padding:13px 14px;
+  border:1px solid var(--line);border-radius:12px;
+  margin:8px 0 13px;outline:none;
+}
+textarea.field {min-height:120px;resize:vertical}
+.empty {color:var(--muted);padding:20px 0}
 footer {
-  text-align: center; color: #999;
-  padding: 55px 15px; font-size: 13px;
+  text-align:center;color:var(--muted);
+  font-size:12px;padding:50px 10px;
+}
+@media(max-width:760px) {
+  .grid {grid-template-columns:repeat(2,1fr)}
+  .layout {padding:18px 14px}
+  .hero {padding:35px 5px 25px}
+  .section {padding:20px}
+}
+@media(max-width:440px) {
+  .grid {grid-template-columns:1fr}
+  .toolbar {flex-direction:column}
+  h1 {letter-spacing:-2px}
 }
 </style>
 </head>
 <body>
-<header>
-  <p>WELCOME TO MY WORLD</p>
-  <h1>My Digital Life.</h1>
-  <p>记录生活 · 收藏灵感 · 探索世界</p>
+<div class="layout">
+
+<header class="topbar">
+  <div class="brand">My <span>Digital Life.</span></div>
+  <div class="status">PERSONAL ARCHIVE · V2</div>
 </header>
 
-<main>
-<input class="search" id="search"
-placeholder="搜索我的数字档案..." />
+<section class="hero" id="home">
+  <div class="eyebrow">WELCOME TO MY WORLD</div>
+  <h1>My Digital Life.</h1>
+  <p>记录生活 · 收藏灵感 · 管理知识 · 探索世界</p>
+</section>
 
-<div class="grid" id="grid">
-  <a class="card" href="#about">
-    <span>👤</span>
-    <h2>关于我</h2>
-    <p>认识自己，记录成长。</p>
-  </a>
-  <a class="card" href="#learning">
-    <span>📚</span>
-    <h2>学习档案</h2>
-    <p>知识、技术与学习记录。</p>
-  </a>
-  <a class="card" href="#life">
-    <span>🌿</span>
-    <h2>生活记录</h2>
-    <p>收藏生活中的美好瞬间。</p>
-  </a>
-  <a class="card" href="#collection">
-    <span>✨</span>
-    <h2>兴趣收藏</h2>
-    <p>喜欢的事物与灵感。</p>
-  </a>
-  <a class="card" href="#devices">
-    <span>💻</span>
-    <h2>数字设备</h2>
-    <p>我的设备与数字工具。</p>
-  </a>
-  <a class="card" href="#knowledge">
-    <span>🗂️</span>
-    <h2>个人知识库</h2>
-    <p>值得保存的知识与经验。</p>
-  </a>
+<div class="toolbar" id="toolbar">
+  <input class="search" id="search"
+    placeholder="⌕ 搜索我的数字档案...">
+  <button class="btn" onclick="openSection('private')">
+    + 私人记录
+  </button>
 </div>
+
+<main>
+<div class="grid" id="cards">
+  <button class="card" data-key="个人 关于我 成长 自我"
+    onclick="openSection('about')">
+    <span class="emoji">👤</span>
+    <h3>关于我</h3>
+    <p>认识自己，记录成长，探索未来。</p>
+  </button>
+
+  <button class="card" data-key="学习 技术 笔记 计划"
+    onclick="openSection('learning')">
+    <span class="emoji">📚</span>
+    <h3>学习档案</h3>
+    <p>知识、技术与学习记录。</p>
+  </button>
+
+  <button class="card" data-key="生活 日记 旅行 记录"
+    onclick="openSection('life')">
+    <span class="emoji">🌿</span>
+    <h3>生活记录</h3>
+    <p>收藏生活中的美好瞬间。</p>
+  </button>
+
+  <button class="card" data-key="兴趣 音乐 电影 收藏"
+    onclick="openSection('collection')">
+    <span class="emoji">✨</span>
+    <h3>兴趣收藏</h3>
+    <p>喜欢的事物与灵感。</p>
+  </button>
+
+  <button class="card" data-key="设备 iPhone iPad Mac ESP32"
+    onclick="openSection('devices')">
+    <span class="emoji">💻</span>
+    <h3>数字设备</h3>
+    <p>我的设备与数字工具。</p>
+  </button>
+
+  <button class="card" data-key="知识 教程 经验 资料"
+    onclick="openSection('knowledge')">
+    <span class="emoji">🗂️</span>
+    <h3>个人知识库</h3>
+    <p>值得保存的知识与经验。</p>
+  </button>
+</div>
+
+<section class="section" id="about">
+  <div class="section-head">
+    <h2>👤 关于我</h2>
+    <button class="back" onclick="goHome()">← 返回首页</button>
+  </div>
+  <div class="info">
+    <h3>Welcome to my digital world.</h3>
+    这是我的个人数字空间。<br>
+    在这里记录成长、探索技术、整理知识，收藏生活中的美好。
+  </div>
+  <p class="empty">这里可以逐步添加你的个人介绍、兴趣和成长经历。</p>
+</section>
+
+<section class="section" id="learning">
+  <div class="section-head">
+    <h2>📚 学习档案</h2>
+    <button class="back" onclick="goHome()">← 返回首页</button>
+  </div>
+  <div class="info">学习是一场长期的探索。记录每一次进步。</div>
+  <div class="info">💡 学习方向：编程、人工智能、数字工具、电子开发。</div>
+  <p class="empty">未来可以在这里整理课程、项目和学习笔记。</p>
+</section>
+
+<section class="section" id="life">
+  <div class="section-head">
+    <h2>🌿 生活记录</h2>
+    <button class="back" onclick="goHome()">← 返回首页</button>
+  </div>
+  <div class="info">记录值得回忆的日子，让生活留下痕迹。</div>
+  <p class="empty">私人生活记录请使用下方本地记录功能。</p>
+</section>
+
+<section class="section" id="collection">
+  <div class="section-head">
+    <h2>✨ 兴趣收藏</h2>
+    <button class="back" onclick="goHome()">← 返回首页</button>
+  </div>
+  <div class="info">音乐、电影、科技产品、网站和有趣的灵感。</div>
+  <p class="empty">这里可以逐步建立你的个人收藏目录。</p>
+</section>
+
+<section class="section" id="devices">
+  <div class="section-head">
+    <h2>💻 数字设备</h2>
+    <button class="back" onclick="goHome()">← 返回首页</button>
+  </div>
+  <div class="info">
+    <h3>我的数字设备</h3>
+    📱 iPhone · 日常移动设备<br>
+    📟 iPad Pro · 学习与阅读<br>
+    💻 MacBook Air · 日常电脑<br>
+    🔧 ESP32 · 电子开发与探索
+  </div>
+  <p class="empty">后续可以补充设备型号、配置、购买日期与维护记录。</p>
+</section>
+
+<section class="section" id="knowledge">
+  <div class="section-head">
+    <h2>🗂️ 个人知识库</h2>
+    <button class="back" onclick="goHome()">← 返回首页</button>
+  </div>
+  <div class="info">
+    收集值得保存的教程、网站、工具、技术经验与知识。
+  </div>
+  <p class="empty">逐步建立自己的知识体系。</p>
+</section>
+
+<section class="section" id="private">
+  <div class="section-head">
+    <div>
+      <h2>🔒 私人档案</h2>
+      <span class="private-label">仅保存在当前浏览器</span>
+    </div>
+    <button class="back" onclick="goHome()">← 返回首页</button>
+  </div>
+
+  <div class="info">
+    这里新增的记录保存在当前设备的浏览器中，
+    不会自动发布到 GitHub，也不会自动同步到其他设备。
+    请勿存放密码或敏感个人资料。
+  </div>
+
+  <form id="recordForm">
+    <label>记录标题</label>
+    <input class="field" id="recordTitle"
+      placeholder="例如：今天学会了什么" required>
+    <label>记录分类</label>
+    <select class="field" id="recordCategory">
+      <option>生活记录</option>
+      <option>学习笔记</option>
+      <option>兴趣收藏</option>
+      <option>设备档案</option>
+      <option>其他</option>
+    </select>
+    <label>记录内容</label>
+    <textarea class="field" id="recordContent"
+      placeholder="写下你的内容..." required></textarea>
+    <button class="btn" type="submit">保存到本机</button>
+  </form>
+
+  <h3>我的本地记录</h3>
+  <div id="recordList"></div>
+</section>
 </main>
 
 <footer>
-  © 2026 My Digital Life · Built with GitHub Pages
+  © 2026 My Digital Life · Designed for personal growth.
 </footer>
+</div>
 
 <script>
-const search = document.getElementById('search');
-search.addEventListener('input', () => {
-  const keyword = search.value.toLowerCase();
-  document.querySelectorAll('.card').forEach(card => {
-    card.style.display = card.innerText.toLowerCase()
-      .includes(keyword) ? '' : 'none';
+const sections = [
+  'about','learning','life','collection',
+  'devices','knowledge','private'
+];
+
+function openSection(id) {
+  document.getElementById('home').style.display='none';
+  document.getElementById('toolbar').style.display='none';
+  document.getElementById('cards').style.display='none';
+  sections.forEach(s => {
+    document.getElementById(s).classList.toggle('active',s===id);
   });
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  sections.forEach(s =>
+    document.getElementById(s).classList.remove('active')
+  );
+  document.getElementById('home').style.display='';
+  document.getElementById('toolbar').style.display='';
+  document.getElementById('cards').style.display='grid';
+  document.getElementById('search').value='';
+  filterCards('');
+  window.scrollTo(0,0);
+}
+
+const search = document.getElementById('search');
+function filterCards(value) {
+  document.querySelectorAll('.card').forEach(card => {
+    const content=(card.innerText+' '+card.dataset.key).toLowerCase();
+    card.style.display=content.includes(value.toLowerCase())?'':'none';
+  });
+}
+search.addEventListener('input',e=>filterCards(e.target.value));
+
+const STORAGE_KEY='my-digital-life-private-v2';
+
+function getRecords() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveRecords(records) {
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(records));
+}
+
+function renderRecords() {
+  const list=document.getElementById('recordList');
+  const records=getRecords();
+  if(!records.length) {
+    list.innerHTML='<p class="empty">还没有记录，试着添加第一条吧。</p>';
+    return;
+  }
+  list.innerHTML='';
+  records.slice().reverse().forEach(record=>{
+    const item=document.createElement('article');
+    item.className='record';
+    const title=document.createElement('strong');
+    title.textContent=record.title;
+    const meta=document.createElement('small');
+    meta.textContent=' · '+record.category+' · '+record.date;
+    const content=document.createElement('p');
+    content.textContent=record.content;
+    const del=document.createElement('button');
+    del.className='btn danger';
+    del.textContent='删除记录';
+    del.addEventListener('click',()=>{
+      if(confirm('确定删除这条记录吗？')) {
+        saveRecords(getRecords().filter(r=>r.id!==record.id));
+        renderRecords();
+      }
+    });
+    item.append(title,meta,content,del);
+    list.appendChild(item);
+  });
+}
+
+document.getElementById('recordForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const title=document.getElementById('recordTitle').value.trim();
+  const content=document.getElementById('recordContent').value.trim();
+  if(!title||!content) return;
+
+  const records=getRecords();
+  records.push({
+    id:Date.now(),
+    title,
+    content,
+    category:document.getElementById('recordCategory').value,
+    date:new Date().toLocaleString('zh-CN')
+  });
+
+  try {
+    saveRecords(records);
+    e.target.reset();
+    renderRecords();
+    alert('记录已保存在当前浏览器！');
+  } catch(error) {
+    alert('保存失败，可能是浏览器存储空间不足。');
+  }
 });
+
+renderRecords();
 </script>
 </body>
 </html>
