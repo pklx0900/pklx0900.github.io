@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Digital Life</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #f5f5f7;
+  color: #1d1d1f;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "SF Pro Display", "PingFang SC", sans-serif;
+}
+header {
+  padding: 65px 24px 45px;
+  text-align: center;
+}
+header p { color: #86868b; }
+h1 { font-size: 42px; letter-spacing: -2px; }
+main { max-width: 950px; margin: auto; padding: 20px; }
+.search {
+  width: 100%; padding: 16px 20px;
+  border: 1px solid #e5e5e7; border-radius: 16px;
+  font-size: 16px; margin-bottom: 25px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 18px;
+}
+.card {
+  display: block; text-decoration: none; color: inherit;
+  background: white; border-radius: 22px;
+  padding: 28px; min-height: 155px;
+  transition: .2s;
+}
+.card:hover { transform: translateY(-4px); }
+.card span { font-size: 30px; }
+.card h2 { font-size: 19px; }
+.card p { color: #86868b; font-size: 14px; }
+footer {
+  text-align: center; color: #999;
+  padding: 55px 15px; font-size: 13px;
+}
+</style>
+</head>
+<body>
+<header>
+  <p>WELCOME TO MY WORLD</p>
+  <h1>My Digital Life.</h1>
+  <p>记录生活 · 收藏灵感 · 探索世界</p>
+</header>
+
+<main>
+<input class="search" id="search"
+placeholder="搜索我的数字档案..." />
+
+<div class="grid" id="grid">
+  <a class="card" href="#about">
+    <span>👤</span>
+    <h2>关于我</h2>
+    <p>认识自己，记录成长。</p>
+  </a>
+  <a class="card" href="#learning">
+    <span>📚</span>
+    <h2>学习档案</h2>
+    <p>知识、技术与学习记录。</p>
+  </a>
+  <a class="card" href="#life">
+    <span>🌿</span>
+    <h2>生活记录</h2>
+    <p>收藏生活中的美好瞬间。</p>
+  </a>
+  <a class="card" href="#collection">
+    <span>✨</span>
+    <h2>兴趣收藏</h2>
+    <p>喜欢的事物与灵感。</p>
+  </a>
+  <a class="card" href="#devices">
+    <span>💻</span>
+    <h2>数字设备</h2>
+    <p>我的设备与数字工具。</p>
+  </a>
+  <a class="card" href="#knowledge">
+    <span>🗂️</span>
+    <h2>个人知识库</h2>
+    <p>值得保存的知识与经验。</p>
+  </a>
+</div>
+</main>
+
+<footer>
+  © 2026 My Digital Life · Built with GitHub Pages
+</footer>
+
+<script>
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const keyword = search.value.toLowerCase();
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.display = card.innerText.toLowerCase()
+      .includes(keyword) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>
